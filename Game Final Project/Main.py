@@ -3,6 +3,7 @@
 
 import sys
 import time
+import random  # Added for random events
 
 def print_slow(text):
     """Function to print text slowly for a better text adventure feel."""
@@ -27,6 +28,7 @@ def main():
     money = 1000
     animal_health = 50
     pasture_quality = 50
+    event_checked = False  # To prevent spamming events in a single month
 
     print_slow("Welcome to 'The Sustainable Herder'!")
     print_slow("You have inherited a small herd of sheep and a damaged pasture.")
@@ -39,7 +41,7 @@ def main():
         print("What do you want to do this month?")
         print("1. Buy food for the herd")
         print("2. Manage the pasture (grazing)")
-        print("3. Check farm events")
+        print("3. Check farm events (Once per month)")
         print("4. End the month and go to the next")
         print("0. Quit Game")
         
@@ -113,19 +115,60 @@ def main():
 
             input("\nPress Enter to return to main menu...")
 
-        # --- MENU 3: FARM EVENTS ---
+        # --- MENU 3: FARM EVENTS (RANDOM) ---
         elif choice == '3':
             print("\n[ Menu: Farm Events ]")
-            # Random events or special actions
-            input("Press Enter to return to main menu...")
+            if event_checked:
+                print("You have already checked for events this month. Wait until next month!")
+            else:
+                event_checked = True
+                event_roll = random.randint(1, 3)
+                
+                if event_roll == 1:
+                    print("Event: A rainy week! The pasture grew beautifully. (Pasture Quality +15%)")
+                    pasture_quality += 15
+                elif event_roll == 2:
+                    print("Event: A local fair! You sold some extra wool. (Money +$100)")
+                    money += 100
+                elif event_roll == 3:
+                    print("Event: Wolf sighting near the farm! The animals are stressed. (Health -10%)")
+                    animal_health -= 10
+                
+                # Keep variables within limits
+                if pasture_quality > 100: pasture_quality = 100
+                if animal_health < 0: animal_health = 0
+            
+            input("\nPress Enter to return to main menu...")
 
         # --- MENU 4: END MONTH (REVENUE & EXPENSES) ---
         elif choice == '4':
             print("\nEnding the month...")
-            # Monthly expenses applied at the end of the month
-            money -= 50 
+            
+            income = animal_health * 2 
+            expenses = 50 
+            profit = income - expenses
+            
+            money += profit
+            
+            animal_health -= 5
+            pasture_quality -= 5
+            
+            if animal_health < 0: animal_health = 0
+            if pasture_quality < 0: pasture_quality = 0
+
+            print(f"Monthly Income: ${income} (based on animal health)")
+            print(f"Monthly Expenses: ${expenses}")
+            if profit >= 0:
+                print(f"Net Profit: +${profit}")
+            else:
+                print(f"Net Loss: -${abs(profit)}")
+                
+            print("\nThe animals get a bit hungry and the pasture needs time to grow.")
+            
             month += 1
-            time.sleep(1)
+            event_checked = False  # Reset event checker for the new month
+            
+            input("\nPress Enter to start the next month...")
 
         # --- QUIT GAME ---
         elif choice == '0':
@@ -135,12 +178,41 @@ def main():
         else:
             print("Invalid choice! Please enter a number between 0 and 4.")
 
-    # Check game ending conditions
+    # --- ENDINGS LOGIC ---
     if month > 10:
-        print("\n" + "*"*30)
+        print("\n" + "*"*40)
         print_slow("GAME OVER! Let's see how you did...")
-        # Win/Loss logic will be added here later
-        print("*"*30)
+        print("*"*40)
+        
+        print(f"Final Money: ${money}")
+        print(f"Final Animal Health: {animal_health}%")
+        print(f"Final Pasture Quality: {pasture_quality}%\n")
+        
+        # Ending 1: Sustainable Herder (Golden Ending)
+        if money >= 500 and animal_health >= 70 and pasture_quality >= 70:
+            print_slow("ENDING: THE SUSTAINABLE HERDER")
+            print("Congratulations! You managed to make a profit while keeping the animals happy")
+            print("and preserving the environment. You are a true sustainable farmer!")
+            
+        # Ending 2: Greedy Farmer (Bad Environment Ending)
+        elif money >= 1000 and pasture_quality < 40:
+            print_slow("ENDING: THE GREEDY FARMER")
+            print("You made a lot of money, but at what cost?")
+            print("The pasture is destroyed and turned into a desert. This is not sustainable.")
+            
+        # Ending 3: Bankruptcy (Bad Financial Ending)
+        elif money < 0:
+            print_slow("ENDING: BANKRUPTCY")
+            print("You ran out of money and had to sell the farm.")
+            print("Sustainability also means financial stability. Better luck next time!")
+            
+        # Ending 4: Neutral Ending
+        else:
+            print_slow("ENDING: AVERAGE FARMER")
+            print("You survived the 10 months. The farm is still standing, but there is")
+            print("room for improvement in balancing money, health, and nature.")
+        
+        print("*"*40 + "\n")
 
 # Run the program
 if __name__ == "__main__":
