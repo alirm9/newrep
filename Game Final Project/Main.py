@@ -47,35 +47,42 @@ def main():
 
         if choice == '1':
             print("\n[ Menu: Food Management ]")
-            # Food purchasing logic will go here
             print("1. Cheap industrial food ($50, Health -5%)")
             print("2. Organic feed ($150, Health +10%)")
-            input("Press Enter to return to main menu...")
+            print("0. Cancel and return")
+            
+            food_choice = input("Select an option (0-2): ")
+            
+            if food_choice == '1':
+                if money >= 50:
+                    money -= 50
+                    animal_health -= 5
+                    print("Result: You bought cheap industrial food. The animals don't look very happy.")
+                else:
+                    print("Result: Not enough money!")
+            
+            elif food_choice == '2':
+                if money >= 150:
+                    money -= 150
+                    animal_health += 10
+                    print("Result: You bought organic feed. The herd looks healthy and energetic!")
+                else:
+                    print("Result: Not enough money!")
+            
+            elif food_choice == '0':
+                print("Returning to main menu...")
+            
+            else:
+                print("Invalid choice.")
 
-        elif choice == '2':
-            print("\n[ Menu: Pasture Management ]")
-            # Pasture management logic will go here
-            input("Press Enter to return to main menu...")
+            # Keep health within 0 to 100 limits
+            if animal_health > 100:
+                animal_health = 100
+            elif animal_health < 0:
+                animal_health = 0
 
-        elif choice == '3':
-            print("\n[ Menu: Farm Events ]")
-            # Random events or special actions
-            input("Press Enter to return to main menu...")
-
-        elif choice == '4':
-            print("\nEnding the month...")
-            # Monthly expenses applied at the end of the month
-            money -= 50 
-            month += 1
-            time.sleep(1)
-
-        elif choice == '0':
-            print("Thanks for playing! Goodbye.")
-            break
-        
-        else:
-            print("Invalid choice! Please enter a number between 0 and 4.")
-
+            input("\nPress Enter to return to main menu...")
+            
     # Check game ending conditions
     if month > 10:
         print("\n" + "*"*30)
