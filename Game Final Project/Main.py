@@ -45,6 +45,7 @@ def main():
         
         choice = input("Enter your choice (0-4): ")
 
+        # --- MENU 1: FOOD MANAGEMENT ---
         if choice == '1':
             print("\n[ Menu: Food Management ]")
             print("1. Cheap industrial food ($50, Health -5%)")
@@ -71,18 +72,69 @@ def main():
             
             elif food_choice == '0':
                 print("Returning to main menu...")
-            
             else:
                 print("Invalid choice.")
 
-            # Keep health within 0 to 100 limits
-            if animal_health > 100:
-                animal_health = 100
-            elif animal_health < 0:
-                animal_health = 0
+            # Keep health within limits
+            if animal_health > 100: animal_health = 100
+            elif animal_health < 0: animal_health = 0
 
             input("\nPress Enter to return to main menu...")
+
+        # --- MENU 2: PASTURE MANAGEMENT ---
+        elif choice == '2':
+            print("\n[ Menu: Pasture Management ]")
+            print("1. Free Grazing (Cost: $0, Pasture Quality -15%)")
+            print("2. Rotational Grazing (Cost: $100, Pasture Quality +10%)")
+            print("0. Cancel and return")
             
+            pasture_choice = input("Select an option (0-2): ")
+            
+            if pasture_choice == '1':
+                pasture_quality -= 15
+                print("Result: You let the herd roam freely. The land is overgrazed and heavily damaged.")
+            
+            elif pasture_choice == '2':
+                if money >= 100:
+                    money -= 100
+                    pasture_quality += 10
+                    print("Result: You set up fences for rotational grazing. The pasture has time to recover!")
+                else:
+                    print("Result: Not enough money for fencing!")
+            
+            elif pasture_choice == '0':
+                print("Returning to main menu...")
+            else:
+                print("Invalid choice.")
+
+            # Keep pasture quality within limits
+            if pasture_quality > 100: pasture_quality = 100
+            elif pasture_quality < 0: pasture_quality = 0
+
+            input("\nPress Enter to return to main menu...")
+
+        # --- MENU 3: FARM EVENTS ---
+        elif choice == '3':
+            print("\n[ Menu: Farm Events ]")
+            # Random events or special actions
+            input("Press Enter to return to main menu...")
+
+        # --- MENU 4: END MONTH (REVENUE & EXPENSES) ---
+        elif choice == '4':
+            print("\nEnding the month...")
+            # Monthly expenses applied at the end of the month
+            money -= 50 
+            month += 1
+            time.sleep(1)
+
+        # --- QUIT GAME ---
+        elif choice == '0':
+            print("Thanks for playing! Goodbye.")
+            break
+        
+        else:
+            print("Invalid choice! Please enter a number between 0 and 4.")
+
     # Check game ending conditions
     if month > 10:
         print("\n" + "*"*30)
