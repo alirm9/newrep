@@ -1,0 +1,4 @@
+HOW TO PLAY:
+- Type 'north', 'south', 'east', or 'west' to move.
+- Type 'inventory' to check your items.
+- Type 'save' to save your progress at any time.
