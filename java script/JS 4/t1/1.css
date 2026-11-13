@@ -1,0 +1,10 @@
+.my-list {
+  list-style-type: none;
+  padding: 0;
+  width: 15em;
+}
+.my-list li {
+  background-color: #f0f0f0;
+  margin-bottom: 4px;
+  padding: 8px;
+}

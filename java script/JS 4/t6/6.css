@@ -1,0 +1,21 @@
+body {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 1rem;
+}
+#pictures {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 1rem;
+  width: 280px;
+}
+.card img {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
