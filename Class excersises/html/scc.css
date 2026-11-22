@@ -1,0 +1,30 @@
+body {
+        background-color: #f0f0f0;
+        text-align: center;
+        color: #000000;
+    }
+h1 {
+        color: #48ff00;
+    }
+
+.center {
+  text-align: center;
+}
+ [target] {
+  background-color: yellow;
+}
+/* Selects all elements with a target="_blank" attribute */
+[target="_blank"] {
+  background-color: yellow;
+}
+/* Selects all elements with a target attribute value containing "w3schools" */
+[target*="w3schools"] {
+  background-color: yellow;
+}
+a:hover {
+  color: yellow;
+}
+/* Selects any <a> element that has been visited */
+a:visited {
+  color: purple;
+}
