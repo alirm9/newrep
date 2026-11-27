@@ -4,7 +4,7 @@ from flask import Flask, jsonify, request
 
 app = Flask(__name__)
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+mBASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DICT_FILE = os.path.join(BASE_DIR, "dictionary.json")
 
 
